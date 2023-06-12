@@ -43,6 +43,8 @@ class TodoListTest < MiniTest::Test
     assert_equal([@todo1, @todo2], @list.to_a)
   end
 
+  # CONTINUE HERE
+
   def test_done?; end
 
   def test_added_not_todo_obj
