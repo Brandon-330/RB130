@@ -1,22 +1,27 @@
 def rot13(string)
-  ALPHABET_POSITION = Hash.new
+  alphabet_position = {}
 
   counter = 0
-  ('a..z').each do |letter|
-    ALPHABET_POSITION[counter] = letter
+  ('a'..'z').each do |letter|
+    alphabet_position[letter] = counter
     counter += 1
   end
 
-  rot13.downcase.chars.map do |char|
+  string.downcase.chars.map do |char|
     if char =~ /[a-z]/
-      place_in_alphabet = ALPHABET_POSITION[char]
+      place_in_alphabet = alphabet_position[char]
       place_in_alphabet += 13
-      ALPHABET_POSITION
+      place_in_alphabet = place_in_alphabet % 26
+      alphabet_position.select { |_, v| v == place_in_alphabet }.keys[0]
+    elsif char =~ /\n/
+      '_'
     else
       char
+    end
   end
 end
 
+p rot13(<<~block 
 Nqn Ybirynpr
 Tenpr Ubccre
 Nqryr Tbyqfgvar
@@ -36,3 +41,5 @@ Zneiva Zvafxl
 Lhxvuveb Zngfhzbgb
 Unllvz Fybavzfxv
 Tregehqr Oynapu
+block
+)
