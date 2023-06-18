@@ -1,5 +1,6 @@
-def each_cons(arr, increment)
-  index
+def each_cons(arr, arguments)
+  
+  
 end
 
 hash = {}
