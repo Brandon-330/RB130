@@ -1,37 +1,44 @@
 class Clock
-  def self.at(hour, minutes=0)
+  def self.at(hour, minute=0)
     @hour = hour
-    @minutes = minutes
+    @minute = minute
   end
 
   def self.add_hour?
-    @hour += (@minutes / 60)
+    @hour += (@minute / 60)
     @hour = @hour % 24
-    @minutes = @minutes % 60
+    @minute = @minute % 60
   end
   
   def self.subtract_hour?
+    @hour -= (@minute / 60)
+    @hour = @hour % 24
+    @minute = @minute % 60
   end
 
   def self.+(num)
-    @minutes += num
+    @minute += num
     add_hour?
+    Clock.at(@hour, @minute)
   end
 
   def self.-(num)
-    @minutes -= num
+    @minute -= num
     subtract_hour?
+    Clock.at(@hour, @minute)
   end
 
   def self.==(other)
-    self.hour == other.hour && self.minutes == other.minutes
+    self.hour == other.hour && self.minute == other.minute
   end
 
   def self.to_s
-    "#{hour}:#{minutes}"
+    "#{@hour}:#{@minute}"
   end
 end
 
-Clock.at(1, 30) == Clock.at(1, 30)
+puts Clock.at(1, 30) == Clock.at(1, 30)
+clock_2 = Clock.at(2, 50)
+puts clock_2
 clock = Clock.at(1, 30) + 10
-puts clock.to_s
+puts clock
