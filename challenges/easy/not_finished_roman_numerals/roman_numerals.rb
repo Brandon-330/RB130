@@ -9,54 +9,74 @@ class RomanNumeral
     1000 => 'M'
   }
 
+  attr_accessor :number, :roman
+
   def initialize(number)
     @number = number
-    @numerals = []
+    @roman = []
   end
 
   def to_roman
-    while @number > 0
-      if all_in_one_letter?
-        @numerals << ROMAN_NUMERALS[@number]
-        @number -= @number
+    while number > 0
+      if ROMAN_NUMERALS.keys.include?(number)
+        exact_roman
+      elsif overestimated?
+        overestimated
       else
-        @numerals << calculate_roman
+        underestimated
       end
     end
 
-    @numerals.join('')
+    roman.join('')
   end
 
-  def all_in_one_letter?
-    ROMAN_NUMERALS.keys.include?(@number)
+  def exact_roman
+    roman << ROMAN_NUMERALS[number]
+    @number = 0
   end
 
-  def calculate_roman
-    total = overestimation
-    return total unless total.nil?
-    underestimation
+  def overestimated?
+    ROMAN_NUMERALS.keys.reverse.any? do |num1|
+      ROMAN_NUMERALS.keys.reverse.any? do |num2|
+        next if num2 > num1
+        (num1 - num2 != 0) && number / (num1 - num2) > 0
+      end
+    end
   end
 
-  def underestimation
+  def overestimated
+    bool = false
+
+    ROMAN_NUMERALS.keys.reverse.each do |num1|
+      ROMAN_NUMERALS.keys.reverse.each do |num2|
+        next if num2 > num1
+        
+        if (num1 - num2 != 0) && number / (num1 - num2) > 0 && !bool
+          bool = true
+          @number -= (num1 - num2)
+          roman << (ROMAN_NUMERALS[num2] + ROMAN_NUMERALS[num1])
+        end
+      end
+    end
+  end
+
+  def underestimated
+    bool = false
+
     ROMAN_NUMERALS.keys.reverse.each do |num|
-      if (@number % num) < @number
+      if number / num > 0 && !bool
+        bool = true
         @number -= num
-        return ROMAN_NUMERALS[num]
+        roman << ROMAN_NUMERALS[num]
       end
     end
-  end
-
-  def overestimation
-    ROMAN_NUMERALS.keys.reverse.each_with_index do |num, idx|
-      next if num == ROMAN_NUMERALS.keys.reverse.first
-      if @number == (ROMAN_NUMERALS.keys.reverse[idx - 1] - num)
-        @number -= (ROMAN_NUMERALS.keys.reverse[idx - 1] - num)
-        return (ROMAN_NUMERALS[num] + ROMAN_NUMERALS[ROMAN_NUMERALS.keys.reverse[idx - 1]])
-      end
-    end
-
-    nil
   end
 end
 
+puts RomanNumeral.new(1).to_roman
+puts RomanNumeral.new(2).to_roman
+puts RomanNumeral.new(3).to_roman
 puts RomanNumeral.new(4).to_roman
+puts RomanNumeral.new(5).to_roman
+puts RomanNumeral.new(6).to_roman
+puts RomanNumeral.new(7).to_roman
