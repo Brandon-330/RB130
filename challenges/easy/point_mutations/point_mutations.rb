@@ -1,16 +1,19 @@
 =begin
+8:38
 ### Problem
-# Input: String 
-# Output: Integer (Hamming distance)
+# Input: String
+# Output: Integer
 
 ## Rules
-# Hamming distance can only be obtained for sequences of equal length
-# Sequences of unequal length, compute hamming distance over shorter length
+# Explicit:
+  - Count the differences in DNA length
+  - If unequal length, compute hamming distance over shorter length
+
+# Implicit:
+  - Comparison between strings always start at the beginning
 
 ### Data Structure
-# DNA is an object and thus we need to define a DNA class
-# DNA class accepts an argument during instantiation, that is the passed in string
-# DNA class has an instance method to compute hamming distance of a string
+# Iterate through both strings
 =end
 
 class DNA
@@ -20,26 +23,16 @@ class DNA
     @strand = strand
   end
 
-  def hamming_distance(comparing_strand)
+  def hamming_distance(gene)
     idx = 0
-    freq = 0
+    counter = 0
+    min_length = [strand.size, gene.size].min
 
-    short_string = shorter?(strand, comparing_strand)
-    while idx < short_string.length
-      freq += 1 if not_equal?(strand[idx], comparing_strand[idx])
+    while idx < min_length
+      counter += 1 if strand[idx] != gene[idx]
       idx += 1
     end
 
-    freq
-  end
-
-  def shorter?(strand, comparing_strand)
-    strand.length < comparing_strand.length ? strand : comparing_strand
-  end
-
-  def not_equal?(strand_char, comparing_strand_char)
-    strand_char != comparing_strand_char
+    counter
   end
 end
-
-puts DNA.new('ABC').hamming_distance('ABD')

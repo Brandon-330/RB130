@@ -1,55 +1,66 @@
+=begin
+9:11
+9:28
+### Problem
+# Input: String
+# Output: Integer
+
+## Rules
+# Explicit:
+  - For each character, receive a score
+  - Each character can be counted multiple times
+  - Case insensitive
+
+# Implicit:
+  - Anything other than a string, returns 0
+  - class method
+
+### Data Structure
+# Create the hash to determine letter value
+# Iterate through the word
+
+## Methods
+#each
+#chars
+=end
+
 class Scrabble
   attr_reader :word
 
-  LETTER_VALUES = { 
-  'A' => 1,
-  'E' => 1,
-  'I' => 1,
-  'O' => 1,
-  'U' => 1,
-  'L' => 1,
-  'N' => 1,
-  'R' => 1,
-  'S' => 1,
-  'T' => 1,
-  'D' => 2,
-  'G' => 2,
-  'B' => 3,
-  'C' => 3,
-  'M' => 3,
-  'P' => 3,
-  'F' => 4,
-  'H' => 4,
-  'V' => 4,
-  'W' => 4,
-  'Y' => 4,
-  'K' => 5,
-  'J' => 8,
-  'X' => 8,
-  'Q' => 10,
-  'Z' => 10
+  LETTER_VALUES = {
+    ['A', 'E', 'I', 'O', 'U', 'L', 'N', 'R', 'S', 'T'] => 1,
+    ['D', 'G'] => 2,
+    ['B', 'C', 'M', 'P'] => 3,
+    ['F', 'H', 'V', 'W', 'Y'] => 4,
+    ['K'] => 5,
+    ['J', 'X'] => 8,
+    ['Q', 'Z'] => 10
   }
 
   def initialize(word)
     @word = word
   end
 
-  def self.score(word)
-    Scrabble.new(word).score
+  def self.score(convenient_word)
+    Scrabble.new(convenient_word).score
   end
 
   def score
-    return 0 if word.nil?
+    return 0 unless word. =~ /[a-zA-Z]/
 
-    sum = 0
+    counter = 0
     word.upcase.chars.each do |char|
-      sum += LETTER_VALUES[char] if LETTER_VALUES.key?(char)
+      counter += return_letter_value(char)
     end
 
-    sum
+    counter
+  end
+
+  private
+
+  def return_letter_value(char)
+    LETTER_VALUES.each do |arr, v|
+      return v if arr.include?(char)
+    end
   end
 end
-
-puts Scrabble.new('Cabbage').score
-puts Scrabble.new('').score
-puts Scrabble.new(' \t\n').score
