@@ -1,27 +1,58 @@
-class Series
-  attr_reader :num_str
+=begin
+9:49
+10:01
+### Problem
+# Input: String
+# Output: Array
 
-  def initialize(num_str)
-    @num_str = num_str
+## Rules
+# Explicit:
+  - Return all possible consecutive series of a string
+    - Given length
+  - Throw an error if given length greater than string length
+
+# Implicit:
+  - No letters to worry about
+
+### Data Structure
+# Arrays
+# Keep slicing the string with an index
+
+## Methods
+#chars
+#each_with_object([])
+#map(&:to_i)
+#size
+=end
+
+class Series
+  attr_reader :number_string
+
+  def initialize(number_string)
+    @number_string = number_string
   end
 
-  def slices(slice_num)
-    raise ArgumentError if slice_num > num_str.length
+  def slices(specified_length)
+    raise ArgumentError unless valid?(specified_length)
+  
+    index = 0
+    all_series = []
+    while index + specified_length <= number_string.length
+      all_series << transform_str_arr_to_i(number_string[index, specified_length])
 
-    idx = 0
-    series_arr = []
-
-    while idx + slice_num <= num_str.length
-      series_arr << to_i_arr(num_str[idx, slice_num])
-      idx += 1
+      index += 1
     end
 
-    series_arr    
+    all_series
   end
 
   private
 
-  def to_i_arr(str)
-    str.split('').map(&:to_i)
+  def valid?(specified_length)
+    specified_length <= number_string.length
+  end
+
+  def transform_str_arr_to_i(str_arr)
+    str_arr.chars.map(&:to_i)
   end
 end
