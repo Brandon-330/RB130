@@ -1,25 +1,33 @@
 class Robot
-  @@names = []
+  attr_reader :name
+
+  @@all_names = []
 
   def name
-    return @name if @name
-    @name = name_randomizer while @@names.include?(@name) || @name.nil?
-    @@names << @name
+    if @name.nil?
+      while @name.nil? || @@all_names.include?(@name)
+        @name = randomizer
+      end
+
+      @@all_names << @name
+    end
 
     @name
   end
 
   def reset
-    @@names.delete(self.name)
+    @@all_names.delete(@name)
     @name = nil
   end
 
   private
 
-  def name_randomizer
-    new_name = []
-    2.times { |_| new_name << ('A'..'Z').to_a.sample }
-    3.times { |_| new_name << (0..9).to_a.sample }
-    new_name.join('')
+  def randomizer
+    new_name = ''
+    
+    2.times { |_| new_name += ('A'..'Z').to_a.sample }
+    3.times { |_| new_name += (1..9).to_a.map(&:to_s).sample }
+
+    new_name
   end
 end
