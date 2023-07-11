@@ -1,32 +1,16 @@
 require 'date'
 
 class Meetup
-  attr_accessor :day, :weekday
-  attr_reader :year, :month
+  WEEKDAYS = %w(sunday monday tuesday wednesday thursday friday saturday)
 
   def initialize(year, month)
-    @year = year
     @month = month
-    @day = 1
-    @weekday = nil
+    @year = year
   end
 
   def day(weekday, schedule)
-    @weekday = weekday
-
-    d = Date.civil(year, month, day)
-    day1_weekday = Date::DAYNAMES[d.wday]
-
-    if ['first', 'second', 'third', 'fourth', 'fifth'].include?(schedule.downcase)
-      order_of_week
-    elsif 
-
-    case schedule.downcase
-    when ['first', 'second']
-    when 'teenth' then find_teenth
-    when 'last' then last_week
-
-    ['first', 'second', 'third', 'fourth', 'fifth'].include?(schedule.downcase)
+    weekday = weekday.downcase
+    d = Date.new(@year, @month)
 
     week_number = case schedule.downcase
                   when 'first' then 1
@@ -34,22 +18,41 @@ class Meetup
                   when 'third' then 3
                   when 'fourth' then 4
                   when 'fifth' then 5
-                  when 'teenth' then [13, 14, 15, 16, 17, 18, 19]
+                  when 'last' then compute_last_week_number(weekday)
+                  when 'teenth' then compute_teenth_week_number(weekday) #Guaranteed to happen every month, so this value has to last the whole month
                   else
-                    'last'
+                    raise ArgumentError, "Invalid schedule"
                   end
+
+    week_number -= 1 if d.wday == WEEKDAYS.index(weekday)
+    while week_number != 0
+      d += 1
+      week_number -= 1 if d.wday == WEEKDAYS.index(weekday)
     end
 
-    while weekday_of_interest != weekday && week_number != 0
-      day += 1
-      weekday_of_interest = Date::DAYNAMES[Date.civil(year, month, day).wday]
-      week_number -= 1 if weekday_of_interest == weekday
-    end
+    d.month == @month ? d : nil
   end
 
-  def last_weekday(weekday)
+  private
 
+  def compute_last_week_number(weekday)
+    d = Date.new(@year, @month)
+    week_number = 0
+    while d.month == @month
+      week_number += 1 if d.wday == WEEKDAYS.index(weekday)
+      d += 1
+    end
+
+    week_number
+  end
+
+  def compute_teenth_week_number(weekday)
+    d = Date.new(@year, @month)
+    week_number = 1
+    while d.month == @month
+      week_number += 1 if d.wday == WEEKDAYS.index(weekday)
+      return week_number if [13, 14, 15, 16, 17, 18, 19].include?(d.day)
+      d += 1
+    end
   end
 end
-p Date::DAYNAMES
-p Meetup.new(2013, 12).day('Monday', 'First')
