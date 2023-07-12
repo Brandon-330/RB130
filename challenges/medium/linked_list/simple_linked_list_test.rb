@@ -1,4 +1,5 @@
 require 'minitest/autorun'
+require 'pry'
 
 require_relative 'simple_linked_list'
 
