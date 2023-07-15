@@ -1,5 +1,6 @@
-def all?(collection)
-  collection.each { |element| return false unless yield(element) }
+def all?(array)
+  array.each { |num| return false unless yield(num) }
+
   true
 end
 

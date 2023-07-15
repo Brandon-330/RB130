@@ -1,5 +1,6 @@
-def none?(collection)
-  collection.each { |element| return false if yield(element) }
+def none?(array)
+  array.each { |num| return false if yield(num) }
+
   true
 end
 

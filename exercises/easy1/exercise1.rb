@@ -1,3 +1,3 @@
 class Tree
-  module Enumerable
+  include Enumerable
 end

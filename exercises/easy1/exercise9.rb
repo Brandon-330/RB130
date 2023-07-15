@@ -1,6 +1,9 @@
-def one?(collection)
-  freq = collection.count { |element| yield(element) }
-  freq == 1
+def one?(array)
+  counter = 0
+
+  array.each { |num| counter += 1 if yield(num) }
+
+  counter == 1
 end
 
 p one?([1, 3, 5, 6]) { |value| value.even? }    # -> true

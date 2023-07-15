@@ -51,12 +51,72 @@ class TodoListTest < MiniTest::Test
   end
 
   def test_adding_not_todo
-    assert_raise ArgumentError do
+    assert_raises TypeError do
       @list.add 'Hello'
     end
   end
   
-  def test_<<
-    
+  def test_add_alias
+    todo4 = Todo.new('Do chores')
+    @list << todo4
+    assert_equal todo4, @list.last
+    assert_equal 4, @list.size
+  end
+
+  def test_test_item_at
+    assert_raises (IndexError) { @list.item_at(4) }
+
+    assert_equal @todo3, @list.item_at(2)
+  end
+
+  def test_mark_done_at
+    assert_raises(IndexError) { @list.mark_done_at(4) }
+
+    @list.mark_done_at(0)
+    assert @todo1.done?
+  end
+
+  def test_mark_undone_at
+    assert_raises(IndexError) { @list.mark_undone_at(4) }
+
+    @todo1.done!
+    assert @todo1.done?
+
+    @list.mark_undone_at(0)
+    refute @todo1.done?
+  end
+
+  def test_done!
+    @list.done!
+    assert @todo1.done?
+    assert @todo2.done?
+    assert @todo3.done?
+  end
+
+  def test_remove_at
+    assert_equal @todo3, @list.remove_at(2)
+    assert_equal 2, @list.size
+  end
+
+  def test_to_s
+    output = <<~OUTPUT.chomp
+    ---- Today's Todos ----
+    [ ] Buy milk
+    [ ] Clean room
+    [ ] Go to gym
+    OUTPUT
+
+    assert_equal output, @list.to_s
+  end
+
+  def test_each
+    assert_equal @list, @list.each { |todo| todo }
+    idx = 0
+    @list.each { |_| idx += 1 }
+    assert_equal idx, @list.size
+  end
+
+  def test_select
+    assert_equal
   end
 end

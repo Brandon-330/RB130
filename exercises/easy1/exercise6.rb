@@ -1,7 +1,8 @@
-def any?(arr)
+def any?(array)
   counter = 0
-  while counter < arr.size
-    return true if yield(arr[counter])
+
+  while counter < array.size
+    return true if yield(array[counter])
     counter += 1
   end
 

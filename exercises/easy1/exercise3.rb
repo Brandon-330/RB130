@@ -1,5 +1,7 @@
-def missing(arr)
-  (arr[0]...arr[-1]).select { |num| !arr.include?(num) }
+def missing(array)
+  (array[0]...array[-1]).each_with_object([]) do |num, new_arr|
+    new_arr << num unless array.include?(num)
+  end
 end
 
 p missing([-3, -2, 1, 5]) == [-1, 0, 2, 3, 4]

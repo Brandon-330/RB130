@@ -1,6 +1,7 @@
-def count(collection)
+def count(array)
   counter = 0
-  collection.each { |element| counter += 1 if yield(element)}
+
+  array.each { |element| counter += 1 if yield(element) }
 
   counter
 end
