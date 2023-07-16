@@ -1,7 +1,7 @@
-def map(collection)
-  collection.each_with_object([]) do |element, new_arr|
-    new_arr << yield(element)
-  end   
+def map(array)
+  array.each_with_object([]) do |element, new_array|
+    new_array << yield(element)
+  end
 end
 
 p map([1, 3, 6]) { |value| value**2 } == [1, 9, 36]

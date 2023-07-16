@@ -1,11 +1,10 @@
-def each_with_index(collection)
-  index = 0
-  while index < collection.size
-    yield(collection[index], index)
-    index += 1
-  end
+def each_with_index(array)
+  idx = 0
 
-  collection
+  array.each do |element|
+    yield(element, idx)
+    idx += 1
+  end
 end
 
 result = each_with_index([1, 3, 6]) do |value, index|

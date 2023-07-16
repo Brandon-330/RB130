@@ -1,6 +1,7 @@
-def count(*args, &block)
+def count(*args)
   counter = 0
-  args.each { |num| counter += 1 if yield(num) }
+  args.each { |element| counter += 1 if yield(element) }
+
   counter
 end
 

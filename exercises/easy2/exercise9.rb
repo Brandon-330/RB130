@@ -1,11 +1,8 @@
-def each_cons(collection)
-  index1 = 0
-  index2 = 1
-
-  while index2 < collection.size
-    yield(collection[index1], collection[index2])
-    index1 += 1
-    index2 += 1
+def each_cons(array)
+  idx = 0
+  while idx + 1 < array.size
+    yield(array[idx], array[idx + 1])
+    idx += 1
   end
 
   nil

@@ -1,11 +1,12 @@
-def drop_while(collection)
-  index = 0
-  while index < collection.size
-    return collection[index..-1] unless yield(collection[index])
-    index += 1
-  end
+def drop_while(array)
+  bool = false
 
-  []
+  array.each_with_object([]) do |element, new_array|
+    unless yield(element) && bool == false
+      bool = true
+      new_array << element
+    end
+  end
 end
 
 p drop_while([1, 3, 5, 6]) { |value| value.odd? } == [6]

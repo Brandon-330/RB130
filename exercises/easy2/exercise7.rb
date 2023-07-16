@@ -1,9 +1,5 @@
-def each_with_object(arr, obj)
-  index = 0
-  while index < arr.size
-    yield(arr[index], obj)
-    index += 1
-  end
+def each_with_object(array, obj)
+  array.each { |element| yield(element, obj) }
 
   obj
 end

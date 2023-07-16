@@ -1,11 +1,9 @@
-def max_by(arr)
-  max = arr[0]
-  
-  arr.each do |num|
-    max = num if yield(num) > yield(max)
-  end
-  
-  max
+def max_by(collection)
+  max_num = collection[0]
+
+  collection.each { |element| max_num = element if yield(max_num) < yield(element)  }
+
+  max_num
 end
 
 p max_by([1, 5, 3]) { |value| value + 2 } == 5

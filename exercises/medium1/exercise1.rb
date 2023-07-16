@@ -8,7 +8,7 @@ class Device
   end
 
   def listen
-    record(yield) if block_given?
+    record yield() if block_given?
   end
 
   def play
