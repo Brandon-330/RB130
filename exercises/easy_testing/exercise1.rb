@@ -1,10 +1,8 @@
 require 'minitest/autorun'
-require 'minitest/reporters'
-MiniTest::Reporters.use!
 
-class TestExercise < Minitest::Test
+class ExampleTest < MiniTest::Test
   def test_odd?
-    value = 3
+    value = 2
     assert value.odd?
   end
 end

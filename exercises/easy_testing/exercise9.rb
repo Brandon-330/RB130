@@ -1,15 +1,8 @@
 require 'minitest/autorun'
 
-class List
-  def processes
-    List.new
-  end
-end
-
-class ExampleTest < MiniTest::Test
-  def test_list_and_return_of_list_same_object
-    list = List.new
-
-    assert_same list.class, list.processes.class
+class Testing < MiniTest::Test
+  def test_different_objects
+    list = []
+    assert_instance_of list.class, list.process
   end
 end

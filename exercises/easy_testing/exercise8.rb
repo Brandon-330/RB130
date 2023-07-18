@@ -1,9 +1,6 @@
 require 'minitest/autorun'
 
-class TestExample < MiniTest::Test
-  def test_subclass_of_numeric
-    value = Numeric.new
-
-    assert_includes value.class.ancestors, Numeric
-  end
+class Testing < MiniTest::Test
+  value = Float
+  assert_kind_of Numeric, Float
 end

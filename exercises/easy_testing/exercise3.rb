@@ -1,7 +1,8 @@
 require 'minitest/autorun'
 
-class TestExample < Minitest::Test
+class ExampleTest < MiniTest::Test
   def test_nil
-    assert_nil(nil)
+    value = nil
+    assert_nil value
   end
 end

@@ -1,8 +1,9 @@
 require 'minitest/autorun'
 
-class TestExample < Minitest::Test
-  def test_downcase
+class ExampleTest < MiniTest::Test
+  def test_xyz_from_downcase
     value = 'XYZ'
-    assert value.downcase, 'xyz'
+
+    assert_equal 'xyz', value.downcase
   end
 end

@@ -6,22 +6,22 @@ def gather(items)
   puts "We've finished gathering!"
 end
 
-gather(items) do |*foodies, wheat |
-  puts foodies.join(', ')
-  puts wheat
+gather(items) do |*items2, last_item|
+  puts items2.join(', ')
+  puts last_item
 end
 
-gather(items) do |apple, *foodies , wheat|
-  puts apple
-  puts foodies.join(', ')
-  puts wheat
+gather(items) do |first_item, *middle_items, last_item|
+  puts first_item
+  puts middle_items.join(', ')
+  puts last_item
 end
 
-gather(items) do |apple, *foodies|
-  puts apple
-  puts foodies.join(', ')
+gather(items) do | first_item, *other_items|
+  puts first_item
+  puts other_items.join(', ')
 end
 
-gather(items) do |apple, corn, cabbage, wheat|
-  puts "#{apple}, #{corn}, #{cabbage}, and #{wheat}"
+gather(items) do |*items, _, _, _|
+  puts items.join(', ')
 end

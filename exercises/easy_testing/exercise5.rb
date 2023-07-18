@@ -1,8 +1,8 @@
 require 'minitest/autorun'
 
-class ExampleTest < Minitest::Test
-  def test_list_no_xyz
-    list = ['xyz', 'abc']
-    assert_includes(list, 'xyz')
+class ExampleTest < MiniTest::Test
+  def test_xyz_in_list
+    list = ['xyz']
+    assert_includes list, 'xyz'
   end
 end
